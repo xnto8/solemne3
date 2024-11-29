@@ -250,6 +250,7 @@ def graficos():
             st.pyplot(fig)
         else:
             st.warning("Por favor, selecciona columnas y un tipo de gráfico.")
+            return 
 
 # Configuración de navegación
 pages = {
@@ -261,6 +262,6 @@ pages = {
 st.sidebar.title("Navegación")
 selected_page = st.sidebar.radio("Selecciona una página:", list(pages.keys()))
 pages[selected_page]()
-            return
+            
 
 
