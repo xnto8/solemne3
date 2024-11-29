@@ -1,12 +1,13 @@
 import streamlit as st
 import pandas as pd
 import requests
+import matplotlib.pyplot as plt
 
 # Configuración inicial
 st.set_page_config(page_title="App Multi-páginas", layout="wide")
 
-# Función para cargar datos desde una URL
-def load_data(url):
+# Función para cargar datos desde una URL (API)
+def load_data_from_api(url):
     try:
         # Obtener datos desde la URL
         response = requests.get(url)
@@ -43,49 +44,60 @@ def load_data(url):
     except Exception as e:
         return None, str(e)
 
+# Función para cargar datos desde un archivo CSV
+def load_data_from_csv(url):
+    try:
+        data = pd.read_csv(url)
+        return data, None
+    except Exception as e:
+        return None, str(e)
+
 # Página de inicio
 def home():
     st.title("Bienvenido a la App Multi-páginas")
     st.write("Usa el menú de la izquierda para navegar entre las secciones.")
     st.write("1. Carga datos desde una URL en la página 'Cargar Datos'.")
     st.write("2. Visualiza gráficos en la página 'Gráficos'.")
-    
 
 # Página para cargar datos
 def cargar_datos():
     st.title("Cargar Datos desde una URL")
-    default_url = "https://restcountries.com/v3.1/all?fields=name,population,area,flag,currencies,languages,capital,region,subregion,borders,timezones,demonyms"
-    url = st.text_input("Introduce la URL de los datos:", value=default_url)
-    if st.button("Cargar Datos"):
-        if url:
-            data, error = load_data(url)
-            if error:
-                st.error(f"Error al cargar los datos: {error}")
-            else:
-                st.session_state["data"] = data
-                st.success("Datos cargados exitosamente.")
-                st.write("Vista previa de los datos:")
-                st.dataframe(data)
-        else:
-            st.warning("Por favor, introduce una URL válida.")
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Página para cargar datos
-def cargar_datos():
-    st.title("Cargar Datos desde URL")
     
-    url = st.text_input("Introduce la URL del archivo CSV:")
+    # Opción de carga de datos desde una API o archivo CSV
+    url_type = st.radio("Selecciona la fuente de datos:", ("API", "CSV"))
 
-    if url:
-        try:
-            data = pd.read_csv(url)
-            st.session_state["data"] = data
-            st.success("Datos cargados correctamente.")
-            st.write(data.head())  # Muestra las primeras filas del dataframe para ver los datos cargados
-        except Exception as e:
-            st.error(f"Error al cargar los datos desde la URL: {e}")
+    if url_type == "API":
+        # Cargar datos desde API (ejemplo con URL predeterminada)
+        default_url = "https://restcountries.com/v3.1/all?fields=name,population,area,flag,currencies,languages,capital,region,subregion,borders,timezones,demonyms"
+        url = st.text_input("Introduce la URL de la API:", value=default_url)
+        if st.button("Cargar Datos desde API"):
+            if url:
+                data, error = load_data_from_api(url)
+                if error:
+                    st.error(f"Error al cargar los datos: {error}")
+                else:
+                    st.session_state["data"] = data
+                    st.success("Datos cargados exitosamente.")
+                    st.write("Vista previa de los datos:")
+                    st.dataframe(data)
+            else:
+                st.warning("Por favor, introduce una URL válida.")
+    
+    elif url_type == "CSV":
+        # Cargar datos desde un archivo CSV
+        url = st.text_input("Introduce la URL del archivo CSV:")
+        if st.button("Cargar Datos desde CSV"):
+            if url:
+                data, error = load_data_from_csv(url)
+                if error:
+                    st.error(f"Error al cargar los datos: {error}")
+                else:
+                    st.session_state["data"] = data
+                    st.success("Datos cargados correctamente.")
+                    st.write("Vista previa de los datos:")
+                    st.dataframe(data)
+            else:
+                st.warning("Por favor, introduce una URL válida.")
 
 # Página para gráficos
 def graficos():
@@ -98,11 +110,11 @@ def graficos():
     data = st.session_state["data"]
     numeric_columns = data.select_dtypes(include=["float64", "int64"]).columns
 
-     if numeric_columns.empty:
+    if numeric_columns.empty:
         st.warning("El dataset no contiene columnas numéricas para graficar.")
         return
 
-      if selected_columns = st.multiselect(
+    selected_columns = st.multiselect(
         "Selecciona las columnas numéricas para graficar:",
         options=numeric_columns,
         format_func=lambda x: x.replace("_", " ")  # Formato legible
@@ -146,7 +158,7 @@ def graficos():
 
 # Configuración de navegación
 pages = {
-    "Inicio": lambda: st.title("Página de inicio"),
+    "Inicio": home,
     "Cargar Datos": cargar_datos,
     "Gráficos": graficos,
 }
@@ -154,5 +166,3 @@ pages = {
 st.sidebar.title("Navegación")
 selected_page = st.sidebar.radio("Selecciona una página:", list(pages.keys()))
 pages[selected_page]()
-
-
