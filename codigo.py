@@ -98,7 +98,7 @@ def graficos():
 
     if st.button("Generar Gráfico"):
         if selected_columns and chart_type != "Selecciona una opción":
-            fig, ax = st.pyplot(subplots())
+            fig, ax = st.subplots()
             if chart_type == "Línea":
                 for col in selected_columns:
                     ax.plot(data.index, data[col], label=col)
