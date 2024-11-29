@@ -1,14 +1,4 @@
 
-!pip install streamlit
-!pip install requests
-!pip install pandas
-!pip install matplotlib
-!pip install plotly
-!pip install altair
-!pip install pydeck
-!pip install geopandas
-!pip install folium
-!pip install plotly-express
 import streamlit as st
 
 # Definimos la página principal
