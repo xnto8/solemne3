@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
 import requests
-import matplotlib.pyplot as plt
-import numpy as np
+
+# Configuración inicial
+st.set_page_config(page_title="App Multi-páginas", layout="wide")
 
 # Función para cargar datos desde una URL
 def load_data(url):
@@ -48,15 +49,16 @@ def home():
     st.write("Usa el menú de la izquierda para navegar entre las secciones.")
     st.write("1. Carga datos desde una URL en la página 'Cargar Datos'.")
     st.write("2. Visualiza gráficos en la página 'Gráficos'.")
+    st.image(
+        "https://via.placeholder.com/800x300.png?text=Visualización+de+Datos",
+        use_column_width=True,
+    )
 
 # Página para cargar datos
 def cargar_datos():
     st.title("Cargar Datos desde una URL")
-
-    # URL predeterminada para cargar los datos de un ejemplo
     default_url = "https://restcountries.com/v3.1/all?fields=name,population,area,flag,currencies,languages,capital,region,subregion,borders,timezones,demonyms"
     url = st.text_input("Introduce la URL de los datos:", value=default_url)
-
     if st.button("Cargar Datos"):
         if url:
             data, error = load_data(url)
@@ -73,7 +75,6 @@ def cargar_datos():
 # Página para gráficos
 def graficos():
     st.title("Visualización de Gráficos")
-
     if "data" not in st.session_state:
         st.warning("Primero carga datos en la página 'Cargar Datos'.")
         return
@@ -98,10 +99,7 @@ def graficos():
 
     if st.button("Generar Gráfico"):
         if selected_columns and chart_type != "Selecciona una opción":
-            # Crear la figura y los ejes con Matplotlib
             fig, ax = plt.subplots()
-
-            # Dependiendo del tipo de gráfico seleccionado, dibujamos
             if chart_type == "Línea":
                 for col in selected_columns:
                     ax.plot(data.index, data[col], label=col)
@@ -126,8 +124,6 @@ def graficos():
                     ax.set_title("Gráfico de Dispersión")
                 else:
                     st.warning("Selecciona exactamente dos columnas para un gráfico de dispersión.")
-
-            # Mostrar el gráfico
             st.pyplot(fig)
         else:
             st.warning("Por favor, selecciona columnas y un tipo de gráfico.")
@@ -142,4 +138,3 @@ pages = {
 st.sidebar.title("Navegación")
 selected_page = st.sidebar.radio("Selecciona una página:", list(pages.keys()))
 pages[selected_page]()
-
