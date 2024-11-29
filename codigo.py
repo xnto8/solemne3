@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import requests
-import matplotlib.pyplot as plt
+import plt
 
 
 # Configuración inicial
@@ -98,7 +98,7 @@ def graficos():
 
     if st.button("Generar Gráfico"):
         if selected_columns and chart_type != "Selecciona una opción":
-            fig, ax = plt.subplots()
+            fig, ax = st.pyplot(subplots())
             if chart_type == "Línea":
                 for col in selected_columns:
                     ax.plot(data.index, data[col], label=col)
