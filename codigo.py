@@ -42,8 +42,8 @@ def main():
     elif pagina == "Gráficos interactivos":
         graficos_interactivos()
 
-if __name__ == "__main__":
-main()
+if __name__ == "__main__.py" :
+ main()
 import requests
 import matplotlib.pyplot as plt
 
