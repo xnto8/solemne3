@@ -1,6 +1,4 @@
 # Asegurarse de que las librerías necesarias están instaladas
-!pip install requests matplotlib
-
 import requests
 import matplotlib.pyplot as plt
 
