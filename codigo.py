@@ -85,7 +85,6 @@ def obtener_datos_pais(pais):
             }
     return None
 
-# Realiza la solicitud a la API de GitHub y procesa los datos
 try:
     response = session.get(url, timeout=30)
     response.raise_for_status()  # Lanza excepción para errores HTTP
