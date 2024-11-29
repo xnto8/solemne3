@@ -1,0 +1,11 @@
+streamlit
+matplotlib
+pandas
+requests
+pip freeze > requirements.txt
+git commit -m "Primer commit de la app Streamlit"
+git checkout -b nueva_caracteristica
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
