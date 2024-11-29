@@ -68,10 +68,29 @@ def cargar_datos():
                 st.dataframe(data)
         else:
             st.warning("Por favor, introduce una URL válida.")
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Página para cargar datos
+def cargar_datos():
+    st.title("Cargar Datos desde URL")
+    
+    url = st.text_input("Introduce la URL del archivo CSV:")
+
+    if url:
+        try:
+            data = pd.read_csv(url)
+            st.session_state["data"] = data
+            st.success("Datos cargados correctamente.")
+            st.write(data.head())  # Muestra las primeras filas del dataframe para ver los datos cargados
+        except Exception as e:
+            st.error(f"Error al cargar los datos desde la URL: {e}")
 
 # Página para gráficos
 def graficos():
     st.title("Visualización de Gráficos")
+
     if "data" not in st.session_state:
         st.warning("Primero carga datos en la página 'Cargar Datos'.")
         return
@@ -127,7 +146,7 @@ def graficos():
 
 # Configuración de navegación
 pages = {
-    "Inicio": home,
+    "Inicio": lambda: st.title("Página de inicio"),
     "Cargar Datos": cargar_datos,
     "Gráficos": graficos,
 }
@@ -135,3 +154,5 @@ pages = {
 st.sidebar.title("Navegación")
 selected_page = st.sidebar.radio("Selecciona una página:", list(pages.keys()))
 pages[selected_page]()
+
+
