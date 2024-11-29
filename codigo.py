@@ -1,4 +1,4 @@
-import streamlit as st
+import subplots as st
 import pandas as pd
 import requests
 
