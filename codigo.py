@@ -98,11 +98,11 @@ def graficos():
     data = st.session_state["data"]
     numeric_columns = data.select_dtypes(include=["float64", "int64"]).columns
 
-    if numeric_columns.empty:
+     if numeric_columns.empty:
         st.warning("El dataset no contiene columnas numéricas para graficar.")
         return
 
-    selected_columns = st.multiselect(
+      if selected_columns = st.multiselect(
         "Selecciona las columnas numéricas para graficar:",
         options=numeric_columns,
         format_func=lambda x: x.replace("_", " ")  # Formato legible
