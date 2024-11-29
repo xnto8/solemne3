@@ -250,7 +250,6 @@ def graficos():
             st.pyplot(fig)
         else:
             st.warning("Por favor, selecciona columnas y un tipo de gráfico.")
-            return 
 
 # Configuración de navegación
 pages = {
