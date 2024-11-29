@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import requests
+import matplotlib.pyplot as plt
+
 
 # Configuración inicial
 st.set_page_config(page_title="App Multi-páginas", layout="wide")
