@@ -43,13 +43,11 @@ def main():
         graficos_interactivos()
 
 if __name__ == "__main__":
-    main()
+main()
 import requests
 import matplotlib.pyplot as plt
 
-# URL del archivo JSON en GitHub (asegúrate de reemplazarla por la URL correcta)
 url = 'https://raw.githubusercontent.com/usuario/repositorio/ruta_del_archivo/archivo.json'
-
 countries_data = []
 
 # Configurar una sesión con reintentos robustos
