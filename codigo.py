@@ -49,10 +49,7 @@ def home():
     st.write("Usa el menú de la izquierda para navegar entre las secciones.")
     st.write("1. Carga datos desde una URL en la página 'Cargar Datos'.")
     st.write("2. Visualiza gráficos en la página 'Gráficos'.")
-    st.image(
-        "https://via.placeholder.com/800x300.png?text=Visualización+de+Datos",
-        use_column_width=True,
-    )
+    
 
 # Página para cargar datos
 def cargar_datos():
