@@ -1,3 +1,8 @@
+Using uv pip install.
+
+Using Python 3.12.7 environment at /home/adminuser/venv
+
+Resolved 41 packages in 577ms
 import requests
 import matplotlib.pyplot as plt
 
